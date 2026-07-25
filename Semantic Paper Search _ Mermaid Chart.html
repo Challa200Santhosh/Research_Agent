@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semantic Paper Search | Mermaid Chart</title>
+    <!-- Load Mermaid.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: #0f172a;
+            color: #f8fafc;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            font-size: 2.2rem;
+            color: #38bdf8;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            font-size: 1.05rem;
+            color: #94a3b8;
+            max-width: 800px;
+        }
+
+        .chart-container {
+            background-color: #1e293b;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+            border: 1px solid #334155;
+            max-width: 95%;
+            width: 1100px;
+            overflow-x: auto;
+        }
+
+        .mermaid {
+            display: flex;
+            justify-content: center;
+        }
+
+        .footer {
+            margin-top: 30px;
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+
+        .footer a {
+            color: #38bdf8;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>🚀 Semantic Paper Search & Literature Agent Workflow</h1>
+        <p>System Architecture & Dataflow Flowchart for <a href="https://github.com/Challa200Santhosh/Research_Agent" target="_blank">Challa200Santhosh/Research_Agent</a></p>
+    </div>
+
+    <div class="chart-container">
+        <div class="mermaid">
+flowchart TD
+    %% Phase 1: Natural Language Prompt & Parameter Extraction
+    USER["User Prompt Input<br/>'Find 15 papers on VLM Autonomous Navigation'"] --> PARSER["Parameter Extraction Node<br/>(src/academic_agent.py)"]
+    PARSER --> PARAMS["Structured UserQueryParameters<br/>(search_topic, target_count, start_year, end_year)"]
+    
+    %% Phase 2: Concurrent Multi-Source Repository Fetching
+    PARAMS --> FETCH["Async Multi-Source Fetcher<br/>(src/fetchers.py)"]
+    FETCH --> S2["Semantic Scholar Graph API<br/>(Metadata, DOIs, Abstracts, Citation Counts)"]
+    FETCH --> ARXIV["ArXiv Atom XML API<br/>(Field-Scoped Query Search)"]
+    FETCH --> ALEX["OpenAlex API<br/>(250M+ Works Index)"]
+    
+    S2 --> POOL["Raw Candidate Paper Pool"]
+    ARXIV --> POOL
+    ALEX --> POOL
+    
+    %% Phase 3: Semantic Title Similarity & Reranking Filter
+    POOL --> DEDUP["Clean Titles & Deduplicate"]
+    DEDUP --> SIM["Title Semantic Similarity Calculator<br/>compute_semantic_title_similarity()"]
+    SIM --> CHECK{"Title Similarity >= 75.0%?"}
+    
+    CHECK -->|NO| DISCARD["Discard Candidate Paper"]
+    CHECK -->|YES| KEEP["Keep Paper & Attach Similarity Score %"]
+    
+    %% Phase 4: Citation Sorting & Parallel LLM Justification Engine
+    KEEP --> SORT["Sort Papers by Relevance & Citation Count Descending"]
+    SORT --> TOPN["Select Exact Top N Target Papers"]
+    TOPN --> JUSTIFY["Parallel LLM Justification Engine<br/>(asyncio.gather)"]
+    JUSTIFY --> RATIONALE["Generate 2-Sentence Paper Relevance Rationale"]
+    
+    %% Phase 5: Structured Excel Report Deliverable
+    RATIONALE --> EXCEL["OpenPyXL Excel Report Exporter<br/>(src/excel_exporter.py)"]
+    EXCEL --> OUTPUT["Save Output Excel Deliverable<br/>(output/Research_Papers_Report.xlsx)"]
+
+    %% Styling
+    classDef primary fill:#1e3a8a,stroke:#3b82f6,stroke-width:2px,color:#fff;
+    classDef process fill:#0f172a,stroke:#10b981,stroke-width:2px,color:#fff;
+    classDef decision fill:#451a03,stroke:#f59e0b,stroke-width:2px,color:#fff;
+    classDef output fill:#064e3b,stroke:#34d399,stroke-width:2px,color:#fff;
+    
+    class USER,PARSER,PARAMS primary;
+    class FETCH,S2,ARXIV,ALEX,POOL,DEDUP,SIM,SORT,TOPN,JUSTIFY,RATIONALE process;
+    class CHECK decision;
+    class EXCEL,OUTPUT output;
+        </div>
+    </div>
+
+    <div class="footer">
+        Generated for <a href="https://github.com/Challa200Santhosh/Research_Agent" target="_blank">Research_Agent Repository</a> &copy; 2026.
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'dark',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            }
+        });
+    </script>
+
+</body>
+</html>
