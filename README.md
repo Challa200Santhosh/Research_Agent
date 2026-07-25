@@ -14,47 +14,8 @@ Unlike generic search tools, `Research_Agent` coordinates **concurrent API queri
 
 ## 🏗️ Architectural Overview & Dataflow Diagram
 
-![Architectural Overview & Dataflow Diagram](output/figures/architecture_flowchart.png)
+![Architectural Overview & Dataflow Diagram](FLOW-CHART.png)
 
-```mermaid
-flowchart TD
-
-    subgraph Phase 1: Natural Language Parsing
-        A[User Prompt\ne.g., 'Find 15 papers on VLM Autonomous Navigation'] --> B[Parameter Extraction Node\n`src/academic_agent.py`]
-        B --> C[Structured UserQueryParameters\n`search_topic`, `target_count`, `start_year`, `end_year`]
-    end
-
-    subgraph Phase 2: Concurrent Multi-Source Repository Fetching
-        C --> D[Async Multi-Source Fetcher\n`src/fetchers.py`]
-        D --> E[Semantic Scholar API\nGraph Search]
-        D --> F[ArXiv Atom XML API\nField-Scoped Search]
-        D --> G[OpenAlex API\n250M+ Works Index]
-        
-        E --> H[Raw Candidate Paper Pool]
-        F --> H
-        G --> H
-    end
-
-    subgraph Phase 3: Semantic Title Similarity & Reranking Filter
-        H --> I[Title Clean & Acronym / Synonym Expansion]
-        I --> J[Semantic Similarity Calculator\n`compute_semantic_title_similarity()`]
-        J --> K{Title Similarity >= 75.0%?}
-        K -->|No| L[Discard Candidate Paper]
-        K -->|Yes| M[Keep Paper & Attach Similarity Score %]
-        M --> N[Sort Pool by Relevance & Citations Count Descending]
-    end
-
-    subgraph Phase 4: Parallel LLM Justification Engine
-        N --> O[Parallel Rationale Generator\n`asyncio.gather()`]
-        O --> P[Generate 2-Sentence Relevance Rationale\nExplaining exact contribution to topic]
-    end
-
-    subgraph Phase 5: Structured Excel Report Generation
-        P --> Q[Excel Report Generator\n`src/excel_exporter.py`]
-        Q --> R[Format OpenPyXL Workbook\nHeader styling, Zebra striping, =HYPERLINK()]
-        R --> S[Save Output Deliverable\n`output/Research_Papers_Report.xlsx`]
-    end
-```
 
 ---
 
