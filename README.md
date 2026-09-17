@@ -100,4 +100,4 @@ The agent generates **`output/Research_Papers_Report.xlsx`** containing:
 
 ## 📜 License
 
-Distributed under the **MIT License**. Free for academic and commercial research use.
+Distributed under the **MIT License**. Free for academic and commercial research use. check 
