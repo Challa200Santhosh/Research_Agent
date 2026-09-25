@@ -40,7 +40,7 @@ Unlike generic search tools, `Research_Agent` coordinates **concurrent API queri
 ```
 Research_Agent/
 ├── config/                         # Configuration & API Key Credentials
-│   ├── .env                        # Active environment variables
+│   ├── .env                        # Your local keys (git-ignored, not committed)
 │   └── .env.example                # Sample environment template
 ├── results/                        # Input User Experimental Results (.docx, .pdf)
 │   └── Copy of Results_testing_21_05_2026.docx
@@ -100,4 +100,11 @@ The agent generates **`output/Research_Papers_Report.xlsx`** containing:
 
 ## 📜 License
 
-Distributed under the **MIT License**. Free for academic and commercial research use. check 
+Distributed under the **MIT License**. Free for academic and commercial research use.
+
+---
+
+## 👤 Author
+
+**Challa Santhosh** — Model-Based Design & Embedded AI Engineer  
+[LinkedIn](https://www.linkedin.com/in/challa-santhosh-36693828a/) · [GitHub](https://github.com/Challa200Santhosh) · sschalla10@gmail.com
